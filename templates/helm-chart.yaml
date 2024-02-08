@@ -10,15 +10,14 @@ spec:
     name: ''
     namespace: {{ .Values.targetNamespace }}
     server: 'https://kubernetes.default.svc'
-  source:
-    
+
+  sources:
     - repoURL: 'https://metallb.github.io/metallb'
       targetRevision: {{ .Values.version }}
-      path: ''
       chart: metallb
 
-    - repoURL: 'https://grafana.github.io/helm-charts'
-      targetRevision: {{ .Values.version }}
+    - repoURL: 'https://github.com/francisco1code/Helm-k8s'
+      targetRevision: HEAD
       ref: values
 
 
