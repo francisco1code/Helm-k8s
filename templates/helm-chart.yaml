@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-install
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: ''
+    namespace: {{ .Values.targetNamespace }}
+    server: 'https://kubernetes.default.svc'
+  source:
+    
+    - repoURL: 'https://metallb.github.io/metallb'
+      targetRevision: {{ .Values.version }}
+      path: ''
+      chart: metallb
+
+    - repoURL: 'https://grafana.github.io/helm-charts'
+      targetRevision: {{ .Values.version }}
+      ref: values
+
+
+  project: default
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace={{ .Values.createTargetNamespace }}
+    automated:
+      selfHeal: true
+      prune: true
